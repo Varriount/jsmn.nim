@@ -145,10 +145,10 @@ proc parseString(parser: var JsmnParser, tokens: var openarray[JsmnToken], json:
       else:
         discard initToken(parser, tokens, JSMN_STRING, start + 1, parser.pos)
       return
-    if c == '\x08' and parser.pos + 1 < length:
+    if c == '\\' and parser.pos + 1 < length:
       inc(parser.pos)
       case json[parser.pos]     # Allowed escaped symbols
-      of '\"', '/', '\x08', 'b', 'f', 'r', 'n', 't':
+      of '\"', '/', '\\', 'b', 'f', 'r', 'n', 't':
         discard
       of 'u':
         inc(parser.pos)
